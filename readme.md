@@ -13,6 +13,7 @@ Solution:
 Build an AI-powered tool/bot/capability that can fill a form using speech recognition and image detection.
 
 What If:
+
 You can select OR upload the form you want to fill out (link, pdf, xls, doc format)
 The AI reads the form and prompts you with which documents to upload to optimize the form-filling process
 You upload those documents by taking photos of them or a file drag and drop.
@@ -23,6 +24,7 @@ The AI then sends you a PDF of the form filled out — error-free, minimal effor
 Cooler features — attach the supporting documents as a QR code on the form with verifiable credentialing so that it is paperless.
 
 Applications of use case:
+
 Government Schemes — social schemes with Aadhaar, Ration, PAN, Voter ID, etc.
 College admissions — students fill out multiple applications across several colleges
 Banking — account opening, applying for loans, other banking tools
@@ -30,6 +32,7 @@ Insurance — incident certificates, identity proof, cancelled cheque, supportin
 Visa Application — passport, hotel, flight, employment, bank information
 
 The plan of action:
+
 Find 3 use cases for form filling and build a working prototype
 Research the most common data points asked on forms and the most common documents required
 Conduct user research across the initial use cases to understand their form-filling behaviour
