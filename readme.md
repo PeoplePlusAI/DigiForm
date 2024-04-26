@@ -1,25 +1,43 @@
-**This readme.md file on your project's github repository acts as a landing page for your project. We have provided a template for it below. All text in *italics* is custom to your project and will need to be updated for each working group. The project anchor is responsible for the Github repository, accessibility settings for project team, design and maintenance.**
+Do you hate filling out forms? As a child (and maybe still), did you get your mother or father to fill out forms for you?
 
-**The readme.md will have a section acting as an index for your project documents. All project documents should be stored in ONE Google Drive that you as project anchor manage and should have the correct accessibility setting [i.e. Anyone with the link should be able to comment on the document]. This section should be arranged in an index format and your Google Drive documents should be linked there -- see template section below for reference**
+Form filling is a very manual process. 
+It requires a lot of attention to detail and the chance of error is high. 
+Forms builders are often sticklers about the format of data entry. 
+What we often take for granted, is that form filling is a very difficult task for low literacy demographics of our country.
 
-# *Add Project Title*
-*A crisp, evocative and vivid description that can help supporters and volunteers understand the groups north star. This should include the problem statement/hypothesis you're building out including the long-haul and shor-term objectives. Please keep this easy to read.* 
+For most forms, we take information from existing base documents and re-enter it into the form. We then attach those same documents to the form as supporting evidence.
 
-# Project Goals and Timeline
-We are looking for enthusiastic volunteers who can help develop/work on the following objectives:
-1. *List objective 1*
-2. *List objective 2*
-<p> Please in 1-2 sentences add a status update for the project.</p>
+E.G. — You manually enter all the information on your 10th and 12th mark sheets to apply for college admission. You then attach those same mark sheets to your admission form.
 
-# Team
-1. Project anchor: *Mention name and email address of the project anchor.*
-2. Team: *Mention how many active volunteers you have in the project.*
-3. If you're interested in joining the initiative in an individual capacity, please fill this [form](https://tally.so/r/meRVgo)
+Solution:
+Build an AI-powered tool/bot/capability that can fill a form using speech recognition and image detection.
 
-# Project Documents
-1. Starting a project and  onboarding new volunteers *(this [document](https://docs.google.com/document/d/1d4XK_fWrDpkty8WD-V2sExDhV7EBJFlSeqc8MN8_KnQ/edit?usp=sharing) is for the Project Anchor to read and use)*
-2. Project charter *(link your Project Charter in Google Drive; if you need to develop a charter document, use this [template](https://docs.google.com/document/d/1xfhEjQhN-lKZpmb_qErtaf2S7Wl0NbICB_Nn4AWqq7I/edit?usp=sharing))*
-3. Project OKRs *(link your OKRs sheet; if you need to build OKRs, use this [template](https://docs.google.com/spreadsheets/d/1BFePxOVQyzhqsf6GLextTKqCSD8K6KgHICtHQFUbPiA/edit?usp=sharing))*
-4. Project contributors *(add Link to contributors.md in this repository)*
-5. Project demo *(if you have had a demo day presentation, please add a direct link to that demo powerpoint, ensure any links to actual bots is within this presentation)*
-6. Learn more about other [people+ai](https://peopleplus.ai/) initiatives.
+What If:
+You can select OR upload the form you want to fill out (link, pdf, xls, doc format)
+The AI reads the form and prompts you with which documents to upload to optimize the form-filling process
+You upload those documents by taking photos of them or a file drag and drop.
+An AI reads those documents and fills in the form provided
+The AI then asks you for responses to the questions on the form that are remaining — through voice or text
+You first review the fields on the form and then finalize the render. 
+The AI then sends you a PDF of the form filled out — error-free, minimal effort, and time-saving
+Cooler features — attach the supporting documents as a QR code on the form with verifiable credentialing so that it is paperless.
+
+Applications of use case:
+Government Schemes — social schemes with Aadhaar, Ration, PAN, Voter ID, etc.
+College admissions — students fill out multiple applications across several colleges
+Banking — account opening, applying for loans, other banking tools
+Insurance — incident certificates, identity proof, cancelled cheque, supporting bills
+Visa Application — passport, hotel, flight, employment, bank information
+
+The plan of action:
+Find 3 use cases for form filling and build a working prototype
+Research the most common data points asked on forms and the most common documents required
+Conduct user research across the initial use cases to understand their form-filling behaviour
+Build a dataset of 1000+ forms that we can use for training and testing
+Decide the best way to host a solution like this — Chatbot? Messaging app? Web app?
+Design a front-end UI/UX that users can test the prototype on
+Figure out how we can host several forms on this solution — should the user upload the form they wish to fill out each time? Or should the AI have an existing repository of forms?
+Develop the tech stack and APIs required to build this solution — which LLM, Language Translation API, Hosting Platform, Server, etc
+Build a go-to-market deck and strategy and model for this solution — who finally pays for the product? B2B or B2C?
+Privacy and Safeguards — The documents shared could be sensitive information. Should the shared document be federated to the local device and enable a one-time share access approach? The opportunity cost is the lower efficiency from conversation history not maintained.
+Modularity to ensure each component of the system can evolve independently and can be swapped with another component if needed.
