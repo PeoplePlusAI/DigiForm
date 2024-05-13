@@ -5,7 +5,7 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:${PORT}
     volumes:
       - .:/code
     depends_on:
