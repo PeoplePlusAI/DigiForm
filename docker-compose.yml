@@ -1,5 +1,5 @@
 services:
-  web:
+  backend:
     build: .
     env_file:
       - .env
@@ -10,12 +10,29 @@ services:
       - .:/code
     depends_on:
       - db
-  db:
-    image: postgres:14
+      - db-migrations
+  db-migrations:
+    build: .
+    command: python manage.py migrate
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - "POSTGRES_HOST_AUTH_METHOD=trust"
+      - .:/code
+    depends_on:
+      - db
+  db:
+    image: postgres:14.12-alpine3.20
+    restart: always
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    env_file:
+      - .env
+    volumes:
+      - digiform_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
-  postgres_data:
+  digiform_data:
+    name: digiform_data
