@@ -44,3 +44,23 @@ Develop the tech stack and APIs required to build this solution — which LLM, L
 Build a go-to-market deck and strategy and model for this solution — who finally pays for the product? B2B or B2C?
 Privacy and Safeguards — The documents shared could be sensitive information. Should the shared document be federated to the local device and enable a one-time share access approach? The opportunity cost is the lower efficiency from conversation history not maintained.
 Modularity to ensure each component of the system can evolve independently and can be swapped with another component if needed.
+
+## Setup
+
+Rename [`.env.example`](.env.example) to `.env`, and add the missing fields.
+
+To start the backend service along with the DB, run the following command:
+
+```bash
+docker compose up -d --build
+```
+
+#### CLI Interface
+
+Once the backend is running, test the application with the cli by running:
+
+```bash
+python cli.py
+```
+
+The `requests` package is required to run [`cli.py`](cli.py).

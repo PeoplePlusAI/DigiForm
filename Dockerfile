@@ -1,5 +1,5 @@
 # Pull base image
-FROM python:3.12.3-alpine
+FROM python:3.11.9-alpine3.20
 
 # Set environment variables
 ENV PIP_DISABLE_PIP_VERSION_CHECK 1

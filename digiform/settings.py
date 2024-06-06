@@ -16,6 +16,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+POSTGRES_DB = (os.environ.get('POSTGRES_DB'))
+POSTGRES_USER = str(os.environ.get('POSTGRES_USER'))
+POSTGRES_PASSWORD = str(os.environ.get('POSTGRES_PASSWORD'))
+POSTGRES_PORT = int(os.environ.get('POSTGRES_PORT'))
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,12 +29,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-n^)*5*ysvl&@j!89mrjyu6^&*8(mvu9cc_78oa00tbb@=5l%0l'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost"]
 
 
 # Application definition
@@ -41,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'digiform',
+    'backend',
 ]
 
 MIDDLEWARE = [
@@ -80,11 +87,11 @@ WSGI_APPLICATION = 'digiform.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
+        "NAME": POSTGRES_DB,
+        "USER": POSTGRES_USER,
+        "PASSWORD": POSTGRES_PASSWORD,
         "HOST": "db",
-        "PORT": os.environ.get('PGPORT'),
+        "PORT": POSTGRES_PORT,
     }
 }
 
