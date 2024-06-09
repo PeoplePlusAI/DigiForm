@@ -1,3 +1,5 @@
+name: digiform
+
 services:
   backend:
     build: .
@@ -5,34 +7,39 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: python manage.py runserver 0.0.0.0:${PORT}
+    command: python manage.py runserver ${PORT}
     volumes:
       - .:/code
     depends_on:
-      - db
-      - db-migrations
+      db:
+        condition: service_healthy
+      db-migrations:
+        condition: service_completed_successfully
+    links:
+      - "db:database"
   db-migrations:
     build: .
     command: python manage.py migrate
     volumes:
       - .:/code
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   db:
     image: postgres:14.12-alpine3.20
-    restart: always
-    ports:
-      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
     env_file:
       - .env
+    ports:
+      - "${PGPORT}:${PGPORT}"
     volumes:
-      - digiform_data:/var/lib/postgresql/data
+      - digiform-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
+      start_period: 0s
+      interval: 5s
+      timeout: 30s
+      retries: 3
 
 volumes:
-  digiform_data:
-    name: digiform_data
+  digiform-data:
+    name: digiform-data
