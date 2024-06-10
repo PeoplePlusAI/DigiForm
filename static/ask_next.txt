@@ -26,4 +26,4 @@ Given that we already know the following information from the user:
 
 #####
 
-Ask the user to provide the first missing field in the above JSON, conversationally.
+Ask the user to provide the first missing field in the above JSON, conversationally. Assume that the conversation has already started, so don't greet the user. Instead, keep the conversation as natural and friendly as possible.
