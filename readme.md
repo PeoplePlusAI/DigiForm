@@ -55,12 +55,6 @@ To start the backend service along with the DB, run the following command:
 docker compose up -d --build
 ```
 
-#### CLI Interface
+### Telegram bot
 
-Once the backend is running, test the application with the cli by running:
-
-```bash
-python cli.py
-```
-
-The `requests` package is required to run [`cli.py`](cli.py).
+Start chatting with the telegram bot with the `/start` command.

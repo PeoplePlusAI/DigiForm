@@ -3,49 +3,51 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_http_methods
 from .client import openai_response
 from .models import User
+import re
+
+def clean_phone_number(phone_number):
+    cleaned_number = re.sub(r'\D', '', phone_number)
+    return int(cleaned_number)
+
 
 @require_http_methods(["GET"])
-def start(request):
+def check(request):
     try:
         data = json.loads(request.body)
 
+        phone_number = clean_phone_number(data.get('phone_number'))
         user_id = data.get('user_id')
-        session_id = data.get('session_id')
 
-        if not all([user_id, session_id]):
+        if not all([user_id, phone_number]):
             return HttpResponseBadRequest("Missing required fields")
-        
+
         try:
-            user = User.objects.filter(mobile=user_id).get()
+            user = User.objects.filter(mobile=phone_number).get()
         except:
-            user = User(mobile=user_id)
+            user = User(mobile=phone_number)
             user.save()
 
-        starter = get_started()
-
         response_data = {
-            'bot_reply': starter,
-            'context': None,
             'status': 'success'
         }
         return JsonResponse(response_data)
-        
+
     except json.JSONDecodeError:
         return HttpResponseBadRequest("Invalid JSON")
 
 @require_http_methods(["POST"])
-def prompt(request):
+def parse(request):
     try:
         data = json.loads(request.body)
-        
-        message = data.get('message')
-        user_id = data.get('user_id')
-        session_id = data.get('session_id')
 
-        if not all([message, user_id, session_id]):
+        message = data.get('message')
+        phone_number = clean_phone_number(data.get('phone_number'))
+        user_id = data.get('user_id')
+
+        if not all([message, user_id, phone_number]):
             return HttpResponseBadRequest("Missing required fields")
-        
-        user = User.objects.filter(mobile=user_id).get()
+
+        user = User.objects.filter(mobile=phone_number).get()
 
         status = {
             "first_name": user.first_name,
@@ -71,13 +73,20 @@ def prompt(request):
         user.save()
 
         if all(status.values()):
-            next_question = "Thank you for providing the information. Your form is complete."
+            next_question = read_file("static/complete.txt").replace('#####', "\n".join([
+                "First Name: " + str(user.first_name),
+                "Last Name: " + str(user.last_name),
+                "Mobile: " + str(user.mobile),
+                "Email: " + str(user.email),
+                "Gender: " + str(user.gender),
+                "Marital Status: " + str(user.marital_status),
+                "Date of Birth: " + str(user.dob)
+            ]))
         else:
             next_question = next_message(status)
 
         response_data = {
-            'bot_reply': next_question,
-            'context': None,
+            'reply': next_question,
             'status': 'success'
         }
         return JsonResponse(response_data)

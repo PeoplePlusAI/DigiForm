@@ -1,13 +1,21 @@
 name: digiform
 
 services:
+  telegram-bot:
+    build: .
+    command: python telegram-bot/run.py
+    volumes:
+      - .:/code
+    depends_on:
+      backend:
+        condition: service_started
   backend:
     build: .
     env_file:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: python manage.py runserver ${PORT}
+    command: python manage.py runserver 0.0.0.0:${PORT}
     volumes:
       - .:/code
     depends_on:
