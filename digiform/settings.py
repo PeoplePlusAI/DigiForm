@@ -16,10 +16,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-POSTGRES_DB = (os.environ.get('POSTGRES_DB'))
+POSTGRES_DB = str(os.environ.get('POSTGRES_DB'))
 POSTGRES_USER = str(os.environ.get('POSTGRES_USER'))
 POSTGRES_PASSWORD = str(os.environ.get('POSTGRES_PASSWORD'))
-POSTGRES_PORT = int(os.environ.get('POSTGRES_PORT'))
+POSTGRES_PORT = int(os.environ.get('PGPORT'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -34,7 +34,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["localhost"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
