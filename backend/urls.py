@@ -3,6 +3,6 @@ from django.views.decorators.csrf import csrf_exempt
 from . import views
 
 urlpatterns = [
-    path('start/', csrf_exempt(views.start), name='start'),
-    path('prompt/', csrf_exempt(views.prompt), name='prompt'),
+    path('check/', csrf_exempt(views.check), name='check'),
+    path('parse/', csrf_exempt(views.parse), name='parse'),
 ]
