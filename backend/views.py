@@ -3,53 +3,26 @@ from django.http import JsonResponse, HttpResponseBadRequest
 from django.views.decorators.http import require_http_methods
 from .client import openai_response
 from .models import User
-import re
-
-def clean_phone_number(phone_number):
-    cleaned_number = re.sub(r'\D', '', phone_number)
-    return int(cleaned_number)
-
+from utils.io import read_file
+from utils.phone_number import normalize_phone_number
 
 @require_http_methods(["GET"])
-def check(request):
+def details(request):
     try:
         data = json.loads(request.body)
 
-        phone_number = clean_phone_number(data.get('phone_number'))
-        user_id = data.get('user_id')
+        client_id = data.get('client_id')
 
-        if not all([user_id, phone_number]):
+        if not all([client_id]):
             return HttpResponseBadRequest("Missing required fields")
 
         try:
-            user = User.objects.filter(mobile=phone_number).get()
+            user = User.objects.filter(client_id=client_id).get()
         except:
-            user = User(mobile=phone_number)
+            user = User(client_id=client_id)
             user.save()
 
-        response_data = {
-            'status': 'success'
-        }
-        return JsonResponse(response_data)
-
-    except json.JSONDecodeError:
-        return HttpResponseBadRequest("Invalid JSON")
-
-@require_http_methods(["POST"])
-def parse(request):
-    try:
-        data = json.loads(request.body)
-
-        message = data.get('message')
-        phone_number = clean_phone_number(data.get('phone_number'))
-        user_id = data.get('user_id')
-
-        if not all([message, user_id, phone_number]):
-            return HttpResponseBadRequest("Missing required fields")
-
-        user = User.objects.filter(mobile=phone_number).get()
-
-        status = {
+        details_ = {
             "first_name": user.first_name,
             "last_name": user.last_name,
             "mobile": user.mobile,
@@ -59,21 +32,171 @@ def parse(request):
             "dob": user.dob,
         }
 
-        if not all(status.values()):
-            response = process_message(message, status)
-            status = json.loads(response)
+        response_data = {
+            'details': details_,
+            'complete': bool(all(details_.values())),
+            'status': 'success'
+        }
+        return JsonResponse(response_data)
 
-        user.first_name = status["first_name"]
-        user.last_name = status["last_name"]
-        user.mobile = status["mobile"]
-        user.email = status["email"]
-        user.gender = status["gender"]
-        user.marital_status = status["marital_status"]
-        user.dob = status["dob"]
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
+@require_http_methods(["POST"])
+def update(request):
+    try:
+        data = json.loads(request.body)
+
+        details_ = data.get('details')
+        client_id = data.get('client_id')
+
+        if not all([details_, client_id]):
+            return HttpResponseBadRequest("Missing required fields")
+
+        try:
+            user = User.objects.filter(client_id=client_id).get()
+        except:
+            user = User(client_id=client_id)
+            user.save()
+
+        current = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "mobile": user.mobile,
+            "email": user.email,
+            "gender": user.gender,
+            "marital_status": user.marital_status,
+            "dob": user.dob,
+            "chat_preferred_language": user.chat_preferred_language
+        }
+
+        for key in current:
+            if details_.get(key):
+                current[key] = details_[key]
+
+        user.first_name = current["first_name"]
+        user.last_name = current["last_name"]
+        user.mobile = normalize_phone_number(current["mobile"]) if current["mobile"] is not None else None
+        user.email = current["email"]
+        user.gender = current["gender"]
+        user.marital_status = current["marital_status"]
+        user.dob = current["dob"]
+        user.chat_preferred_language = current["chat_preferred_language"]
+
         user.save()
 
-        if all(status.values()):
-            next_question = read_file("static/complete.txt").replace('#####', "\n".join([
+        details_ = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "mobile": user.mobile,
+            "email": user.email,
+            "gender": user.gender,
+            "marital_status": user.marital_status,
+            "dob": user.dob,
+            "chat_preferred_language": user.chat_preferred_language
+        }
+
+        response_data = {
+            'details': details_,
+            'complete': bool(all(details_.values())),
+            'status': 'success'
+        }
+        return JsonResponse(response_data)
+
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
+@require_http_methods(["POST"])
+def process(request):
+    try:
+        data = json.loads(request.body)
+
+        message = data.get('message')
+        client_id = data.get('client_id')
+
+        if not all([message, client_id]):
+            return HttpResponseBadRequest("Missing required fields")
+
+        try:
+            user = User.objects.filter(client_id=client_id).get()
+        except:
+            user = User(client_id=client_id)
+            user.save()
+
+        current = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "mobile": user.mobile,
+            "email": user.email,
+            "gender": user.gender,
+            "marital_status": user.marital_status,
+            "dob": user.dob,
+        }
+
+        if not all(current.values()):
+            prompt = read_file("static/prompts/construct.txt").replace('#####', str(current)) + str(message)
+            try:
+                updated = json.loads(openai_response(prompt))
+            except:
+                updated = current
+
+        user.first_name = updated["first_name"]
+        user.last_name = updated["last_name"]
+        user.mobile = normalize_phone_number(current["mobile"]) if current["mobile"] is not None else None
+        user.email = updated["email"]
+        user.gender = updated["gender"]
+        user.marital_status = updated["marital_status"]
+        user.dob = updated["dob"]
+        user.save()
+
+        details_ = {
+            "first_name": str(user.first_name),
+            "last_name": str(user.last_name),
+            "mobile": str(user.mobile),
+            "email": str(user.email),
+            "gender": str(user.gender),
+            "marital_status": str(user.marital_status),
+            "dob": str(user.dob),
+        }
+
+        response_data = {
+            'details': details_,
+            'complete': bool(all(details_.values())),
+            'status': 'success'
+        }
+        return JsonResponse(response_data)
+
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
+@require_http_methods(["GET"])
+def converse(request):
+    try:
+        data = json.loads(request.body)
+
+        client_id = data.get('client_id')
+
+        if not all([client_id]):
+            return HttpResponseBadRequest("Missing required fields")
+
+        try:
+            user = User.objects.filter(client_id=client_id).get()
+        except:
+            user = User(client_id=client_id)
+            user.save()
+
+        details_ = {
+            "first_name": user.first_name,
+            "last_name": user.last_name,
+            "mobile": user.mobile,
+            "email": user.email,
+            "gender": user.gender,
+            "marital_status": user.marital_status,
+            "dob": user.dob,
+        }
+
+        if all(details_.values()):
+            next_question = read_file("static/chat/complete.txt").replace('#####', "\n".join([
                 "First Name: " + str(user.first_name),
                 "Last Name: " + str(user.last_name),
                 "Mobile: " + str(user.mobile),
@@ -83,7 +206,8 @@ def parse(request):
                 "Date of Birth: " + str(user.dob)
             ]))
         else:
-            next_question = next_message(status)
+            prompt = read_file("static/prompts/ask_next.txt").replace('#####', str(details_))
+            next_question = str(openai_response(prompt))
 
         response_data = {
             'reply': next_question,
@@ -93,19 +217,3 @@ def parse(request):
 
     except json.JSONDecodeError:
         return HttpResponseBadRequest("Invalid JSON")
-
-def read_file(filepath):
-    with open(filepath, 'r') as f:
-        content = f.read()
-    return content
-
-def get_started():
-    return read_file("static/start.txt")
-
-def process_message(message, status):
-    prompt = read_file("static/construct.txt").replace('#####', str(status)) + str(message)
-    return openai_response(prompt)
-
-def next_message(status):
-    prompt = read_file("static/ask_next.txt").replace('#####', str(status))
-    return openai_response(prompt)

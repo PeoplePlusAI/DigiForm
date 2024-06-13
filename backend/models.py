@@ -1,6 +1,5 @@
 from django.db import models
 import uuid
-from utils.languages import languages
 
 class Gender(models.TextChoices):
     MALE = 'MALE'
