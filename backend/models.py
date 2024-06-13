@@ -1,7 +1,28 @@
 from django.db import models
 import uuid
+from utils.languages import languages
 
-# Create your models here.
+class Gender(models.TextChoices):
+    MALE = 'MALE'
+    FEMALE = 'FEMALE'
+    OTHER = 'OTHER'
+
+class MaritalStatus(models.TextChoices):
+    UNMARRIED = 'UNMARRIED'
+    MARRIED = 'MARRIED'
+
+class Language(models.TextChoices):
+    ENGLISH = 'ENGLISH'
+    HINDI = 'HINDI'
+    TAMIL = 'TAMIL'
+    TELUGU = 'TELUGU'
+    KANNADA = 'KANNADA'
+    MALAYALAM = 'MALAYALAM'
+    BENGALI = 'BENGALI'
+    GUJARATI = 'GUJARATI'
+    MARATHI = 'MARATHI'
+    ORIYA = 'ORIYA'
+    PUNJABI = 'PUNJABI'
 
 class User(models.Model):
     user_id = models.UUIDField(primary_key=True, auto_created=True, default = uuid.uuid4, editable=False, unique=True)
@@ -9,17 +30,12 @@ class User(models.Model):
     last_name = models.CharField(max_length=100, null=True)
     father_name = models.CharField(max_length=100, null=True)
     mother_name = models.CharField(max_length=100, null=True)
-    class Gender(models.TextChoices):
-        MALE = 'MALE'
-        FEMALE = 'FEMALE'
-        OTHER = 'OTHER'
     gender = models.CharField(max_length=20,choices=Gender.choices, null=True)
-    class MaritalStatus(models.TextChoices):
-        UNMARRIED = 'UNMARRIED'
-        MARRIED = 'MARRIED'
     marital_status = models.CharField(max_length=20,choices=MaritalStatus.choices, null=True)
     dob = models.DateField(null=True)
-    mobile = models.BigIntegerField(db_index=True, null=True)
+    mobile = models.CharField(max_length=30, null=True)
+    client_id = models.CharField(db_index=True, max_length=50, null=True)
+    chat_preferred_language = models.CharField(max_length=20,choices=Language.choices, null=True)
     nationality = models.CharField(max_length=30, null=True)
     email = models.EmailField(max_length=100, null=True)
     permanent_address_id = models.ForeignKey('Address', null=True, on_delete=models.CASCADE, related_name='permanent_address_id')
