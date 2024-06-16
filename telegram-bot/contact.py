@@ -1,9 +1,6 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 from utils.env import PORT
 from utils.reqs import get_request
-from telegram import Update, KeyboardButton, ReplyKeyboardMarkup
 
 async def contact(query, context):
     button = KeyboardButton(text="Share Phone Number", request_contact=True)

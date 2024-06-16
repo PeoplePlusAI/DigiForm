@@ -1,9 +1,6 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from utils.io import read_file
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
+from utils.io import read_file
 from utils.languages import languages
 from utils.reqs import get_request, post_request
 from utils.env import PORT

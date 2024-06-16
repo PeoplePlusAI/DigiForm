@@ -7,6 +7,7 @@ import telegram.ext.filters as filters
 from start import start, language_button
 from contact import handle_contact
 from message import handle_message
+from image import handle_image
 
 if __name__ == '__main__':
     application = ApplicationBuilder().token(TELEGRAM_BOT_TOKEN).build()
@@ -22,5 +23,8 @@ if __name__ == '__main__':
 
     message_handler = MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
     application.add_handler(message_handler)
+
+    image_handler = MessageHandler(filters.PHOTO, handle_image)
+    application.add_handler(image_handler)
 
     application.run_polling()
