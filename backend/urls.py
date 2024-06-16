@@ -7,4 +7,5 @@ urlpatterns = [
     path('update/', csrf_exempt(views.update), name='update'),
     path('process/', csrf_exempt(views.process), name='process'),
     path('converse/', csrf_exempt(views.converse), name='converse'),
+    path('image/', csrf_exempt(views.image), name='image'),
 ]
