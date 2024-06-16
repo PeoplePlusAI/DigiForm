@@ -11,17 +11,17 @@ class MaritalStatus(models.TextChoices):
     MARRIED = 'MARRIED'
 
 class Language(models.TextChoices):
-    ENGLISH = 'ENGLISH'
-    HINDI = 'HINDI'
-    TAMIL = 'TAMIL'
-    TELUGU = 'TELUGU'
-    KANNADA = 'KANNADA'
-    MALAYALAM = 'MALAYALAM'
-    BENGALI = 'BENGALI'
-    GUJARATI = 'GUJARATI'
-    MARATHI = 'MARATHI'
-    ORIYA = 'ORIYA'
-    PUNJABI = 'PUNJABI'
+    ENGLISH = 'English'
+    HINDI = 'Hindi'
+    TAMIL = 'Tamil'
+    TELUGU = 'Telugu'
+    KANNADA = 'Kannada'
+    MALAYALAM = 'Malayalam'
+    BENGALI = 'Bengali'
+    GUJARATI = 'Gujarati'
+    MARATHI = 'Marathi'
+    ORIYA = 'Oriya'
+    PUNJABI = 'Punjabi'
 
 class User(models.Model):
     user_id = models.UUIDField(primary_key=True, auto_created=True, default = uuid.uuid4, editable=False, unique=True)
