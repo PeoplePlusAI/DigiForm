@@ -25,6 +25,7 @@ langsmith==0.1.77
 multidict==6.0.5
 numpy==1.26.4
 openai==1.34.0
+opencv-python==4.10.0.82
 orjson==3.10.5
 packaging==24.1
 phonenumbers==8.13.38
