@@ -3,7 +3,7 @@ name: digiform
 services:
   telegram-bot:
     build: .
-    command: python telegram-bot/run.py
+    command: python3 telegram-bot/run.py
     volumes:
       - .:/code
     depends_on:
@@ -15,7 +15,7 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: python manage.py runserver 0.0.0.0:${PORT}
+    command: python3 manage.py runserver 0.0.0.0:${PORT}
     volumes:
       - .:/code
     depends_on:
@@ -27,7 +27,7 @@ services:
       - "db:database"
   db-migrations:
     build: .
-    command: python manage.py migrate
+    command: python3 manage.py migrate
     volumes:
       - .:/code
     depends_on:
