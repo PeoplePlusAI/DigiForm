@@ -7,6 +7,7 @@ from utils.env import PORT
 
 hi_text = read_file('static/chat/hi.txt')
 lang_text = read_file('static/chat/lang.txt')
+upload_text = read_file('static/upload.txt')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     response = get_request(f"http://backend:{PORT}/api/details/", {"client_id": f"tg:{update.effective_user.id}"})
@@ -22,6 +23,7 @@ async def language_button(update, context):
     await query.answer()
     client_id = update.effective_user.id
     _ = post_request(f"http://backend:{PORT}/api/update/", {"client_id": f"tg:{client_id}", "details": {"chat_preferred_language": query.data}})
-    await context.bot.send_message(chat_id=query.message.chat_id, text=f"Your language has been set to {query.data}.")
+    await context.bot.send_message(chat_id=query.message.chat_id, text=upload_text.replace("#####", query.data))
+
     response = get_request(f"http://backend:{PORT}/api/converse/", {"client_id": f"tg:{client_id}"})
     await context.bot.send_message(chat_id=query.message.chat_id, text=response.get("reply"))
