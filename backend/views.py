@@ -111,8 +111,6 @@ def done(request):
     timestart = str(user.created_at.strftime("%Y-%m-%d %H:%M:%S"))
     timeend = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
 
-    print(timestart, timeend)
-
     timestart = parser.parse(timestart)
     timeend = parser.parse(timeend)
 
