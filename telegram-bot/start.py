@@ -24,6 +24,3 @@ async def language_button(update, context):
     client_id = update.effective_user.id
     _ = post_request(f"http://backend:{PORT}/api/update/", {"client_id": f"tg:{client_id}", "details": {"chat_preferred_language": query.data}})
     await context.bot.send_message(chat_id=query.message.chat_id, text=upload_text.replace("#####", query.data))
-
-    response = get_request(f"http://backend:{PORT}/api/converse/", {"client_id": f"tg:{client_id}"})
-    await context.bot.send_message(chat_id=query.message.chat_id, text=response.get("reply"))
