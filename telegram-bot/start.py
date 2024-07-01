@@ -7,7 +7,7 @@ from utils.env import PORT
 
 hi_text = read_file('static/chat/hi.txt')
 lang_text = read_file('static/chat/lang.txt')
-upload_text = read_file('static/upload.txt')
+upload_text = read_file('static/chat/upload.txt')
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     response = get_request(f"http://backend:{PORT}/api/details/", {"client_id": f"tg:{update.effective_user.id}"})
