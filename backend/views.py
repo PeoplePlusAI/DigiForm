@@ -9,6 +9,8 @@ from .client import generate_questions, parse_message, parse_image
 from .models import User
 from utils.io import read_file
 from utils.phone_number import normalize_phone_number
+import datetime
+from dateutil import parser
 
 @require_http_methods(["GET"])
 def details(request):
@@ -40,6 +42,86 @@ def details(request):
     response_data = {
         'details': details_,
         'complete': bool(all(details_.values())),
+        'status': 'success'
+    }
+    return JsonResponse(response_data)
+
+@require_http_methods(["POST"])
+def clear(request):
+    try:
+        data = json.loads(request.body)
+        client_id = data.get('client_id')
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
+    if not all([client_id]):
+        return HttpResponseBadRequest("Missing required fields")
+
+    try:
+        user = User.objects.filter(client_id=client_id).get()
+        user.delete()
+        user = User(client_id=client_id)
+        user.save()
+    except:
+        user = User(client_id=client_id)
+        user.save()
+
+    response_data = {
+        'complete': False,
+        'status': 'success'
+    }
+    return JsonResponse(response_data)
+
+@require_http_methods(["POST"])
+def done(request):
+    try:
+        data = json.loads(request.body)
+        client_id = data.get('client_id')
+    except json.JSONDecodeError:
+        return HttpResponseBadRequest("Invalid JSON")
+
+    if not all([client_id]):
+        return HttpResponseBadRequest("Missing required fields")
+
+    try:
+        user = User.objects.filter(client_id=client_id).get()
+    except:
+        raise Exception("User not found")
+
+    user.confirm_details = True
+
+    try:
+        user.save()
+    except Exception as e:
+        print(f"Unable to save user details: {e}")
+        return JsonResponse({
+            'details': {
+                "first_name": str(user.first_name),
+                "last_name": str(user.last_name),
+                "mobile": str(user.mobile),
+                "email": str(user.email),
+                "gender": str(user.gender),
+                "marital_status": str(user.marital_status),
+                "dob": str(user.dob),
+            },
+            'complete': True,
+            'status': 'failure'
+        })
+
+    timestart = str(user.created_at.strftime("%Y-%m-%d %H:%M:%S"))
+    timeend = str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+    timestart = parser.parse(timestart)
+    timeend = parser.parse(timeend)
+
+    diff = timeend - timestart
+    total_seconds = int(diff.total_seconds())
+    minutes = total_seconds // 60
+    seconds = total_seconds % 60
+
+    response_data = {
+        'time_taken': f"{minutes} minutes {seconds} seconds",
+        'complete': True,
         'status': 'success'
     }
     return JsonResponse(response_data)
@@ -402,7 +484,7 @@ def converse(request):
     }
 
     if all(details_.values()):
-        reply = read_file("static/chat/complete.txt").replace('#####', "\n".join([
+        reply = read_file("static/chat/table.txt").replace('#####', "\n".join([
             "First Name: " + str(user.first_name),
             "Last Name: " + str(user.last_name),
             "Mobile: " + str(user.mobile),
@@ -429,6 +511,7 @@ def converse(request):
 
     response_data = {
         'reply': reply,
+        'complete': bool(all(details_.values())),
         'status': 'success'
     }
     return JsonResponse(response_data)
