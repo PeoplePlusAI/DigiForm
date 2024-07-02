@@ -1,5 +1,5 @@
 from utils.env import PORT
-from utils.reqs import get_request, get_image, post_image
+from utils.reqs import get_request, post_image
 
 async def handle_image(update, context):
     client_id = update.effective_user.id
