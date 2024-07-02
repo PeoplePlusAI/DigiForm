@@ -44,6 +44,7 @@ class User(models.Model):
     store_personal_data = models.BooleanField(null=True)
     consent_for_digiform = models.BooleanField(null=True)
     notifications_allowed = models.BooleanField(null=True)
+    confirm_details = models.BooleanField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
