@@ -50,6 +50,7 @@ Modularity to ensure each component of the system can evolve independently and c
 Rename [`.env.example`](.env.example) to `.env`, and add the missing fields.
 
 A sample .env file will look like this:
+
 PORT=6001
 
 PGPORT=5432
@@ -78,3 +79,16 @@ docker compose up -d --build
 ### Telegram bot
 
 Start chatting with the telegram bot with the `/start` command.
+The bot will greet you and request your mobile number. Enter your valid mobile number when prompted.
+Next, the bot will ask for your email address. Provide your valid email address.
+Now, the bot will prompt you to upload your Aadhaar and PAN documents. Send the scanned copies or clear photographs of your Aadhaar and PAN to the bot.
+After receiving your documents, the bot will process the information and fill in the relevant fields in the form.
+Once the form is filled, the bot will send you a table displaying the extracted information for your verification. If you want to update any information, you can do so here.
+Finally, the bot will display the time taken to complete the entire process, with a Thank You message.
+
+### Prerequisites
+
+Telegram account
+Valid mobile number
+Valid email address
+Aadhaar and PAN documents (scanned or photographed)
