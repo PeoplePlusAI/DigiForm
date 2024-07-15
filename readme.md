@@ -55,9 +55,9 @@ PORT=6001
 
 PGPORT=5432
 
-POSTGRES_USER="your-username"
+POSTGRES_USER="digiform"
 
-POSTGRES_PASSWORD="<your-password>"
+POSTGRES_PASSWORD="digiform"
 
 POSTGRES_DB="digiform"
 
@@ -65,9 +65,10 @@ GROQ_API_KEY="<your-key>"
 
 GROQ_CHAT_MODEL="llama3-70b-8192"
 
-DJANGO_SECRET_KEY="<your-key>"
+DJANGO_SECRET_KEY="django-insecure-n^)*5*ysvl&@j!89mrjyu6^&*8(mvu9cc_78oa00tbb@=5l%0l"
 
 TELEGRAM_BOT_TOKEN="<your-telegram-bot-token>"
+
 
 
 To start the backend service along with the DB, run the following command (e.g. on Github Codespace):
