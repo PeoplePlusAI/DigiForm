@@ -97,8 +97,8 @@ Finally, the bot will display the time taken to complete the entire process, wit
 
 ### Prerequisites
 
-Telegram account  
-Valid mobile number  
-Valid email address  
-Aadhaar and PAN documents (scanned or photographed)
+- Telegram account  
+- Valid mobile number  
+- Valid email address  
+- Aadhaar and PAN documents (scanned or photographed)
   
