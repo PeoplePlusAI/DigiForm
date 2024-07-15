@@ -51,14 +51,23 @@ Rename [`.env.example`](.env.example) to `.env`, and add the missing fields.
 
 A sample .env file will look like this:
 PORT=6001
+
 PGPORT=5432
+
 POSTGRES_USER="your-username"
+
 POSTGRES_PASSWORD="<your-password>"
+
 POSTGRES_DB="digiform"
+
 GROQ_API_KEY="<your-key>"
+
 GROQ_CHAT_MODEL="llama3-70b-8192"
+
 DJANGO_SECRET_KEY="<your-key>"
+
 TELEGRAM_BOT_TOKEN="<your-telegram-bot-token>"
+
 
 To start the backend service along with the DB, run the following command (e.g. on Github Codespace):
 
