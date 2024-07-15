@@ -12,7 +12,7 @@ E.G. — You manually enter all the information on your 10th and 12th mark sheet
 Solution:
 Build an AI-powered tool/bot/capability that can fill a form using speech recognition and image detection.
 
-What If:
+### What If:
 
 You can select OR upload the form you want to fill out (link, pdf, xls, doc format)
 The AI reads the form and prompts you with which documents to upload to optimize the form-filling process
@@ -23,7 +23,7 @@ You first review the fields on the form and then finalize the render.
 The AI then sends you a PDF of the form filled out — error-free, minimal effort, and time-saving
 Cooler features — attach the supporting documents as a QR code on the form with verifiable credentialing so that it is paperless.
 
-Applications of use case:
+### Applications of use case:
 
 Government Schemes — social schemes with Aadhaar, Ration, PAN, Voter ID, etc.
 College admissions — students fill out multiple applications across several colleges
@@ -31,7 +31,7 @@ Banking — account opening, applying for loans, other banking tools
 Insurance — incident certificates, identity proof, cancelled cheque, supporting bills
 Visa Application — passport, hotel, flight, employment, bank information
 
-The plan of action:
+### The plan of action:
 
 Find 3 use cases for form filling and build a working prototype
 Research the most common data points asked on forms and the most common documents required
@@ -61,13 +61,13 @@ POSTGRES_PASSWORD="digiform"
 
 POSTGRES_DB="digiform"
 
-GROQ_API_KEY="<your-key>"
+GROQ_API_KEY="your-key>"
 
 GROQ_CHAT_MODEL="llama3-70b-8192"
 
 DJANGO_SECRET_KEY="django-insecure-n^)*5*ysvl&@j!89mrjyu6^&*8(mvu9cc_78oa00tbb@=5l%0l"
 
-TELEGRAM_BOT_TOKEN="<your-telegram-bot-token>"
+TELEGRAM_BOT_TOKEN="your-telegram-bot-token>"
 
 
 
