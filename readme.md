@@ -50,6 +50,7 @@ Modularity to ensure each component of the system can evolve independently and c
 Rename [`.env.example`](.env.example) to `.env`, and add the missing fields.
 
 A sample .env file will look like this:
+```
 
 PORT=6001
 
@@ -69,7 +70,7 @@ DJANGO_SECRET_KEY="django-insecure-n^)*5*ysvl&@j!89mrjyu6^&*8(mvu9cc_78oa00tbb@=
 
 TELEGRAM_BOT_TOKEN="your-telegram-bot-token>"
 
-
+```
 
 To start the backend service along with the DB, run the following command (e.g. on Github Codespace):
 
