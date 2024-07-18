@@ -4,11 +4,22 @@ services:
   telegram-bot:
     build: .
     command: python3 telegram-bot/run.py
+    deploy:
+      resources:
+        limits:
+          cpus: 2
+          memory: 1.5G
+        reservations:
+          cpus: 2
+          memory: 1.5G
     volumes:
       - .:/code
+    restart: always
     depends_on:
       backend:
         condition: service_started
+  
+    
   backend:
     build: .
     env_file:
@@ -16,8 +27,17 @@ services:
     ports:
       - "${PORT}:${PORT}"
     command: python3 manage.py runserver 0.0.0.0:${PORT}
+    deploy:
+      resources:
+        limits:
+          cpus: 4
+          memory: 6G
+        reservations:
+          cpus: 4
+          memory: 6G
     volumes:
       - .:/code
+    restart: always
     depends_on:
       db:
         condition: service_healthy
@@ -25,6 +45,7 @@ services:
         condition: service_completed_successfully
     links:
       - "db:database"
+
   db-migrations:
     build: .
     command: python3 manage.py migrate
@@ -33,6 +54,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    
+
   db:
     image: postgres:14.12-alpine3.20
     env_file:
@@ -41,6 +64,7 @@ services:
       - "${PGPORT}:${PGPORT}"
     volumes:
       - digiform-data:/var/lib/postgresql/data
+    restart: always
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER}", "-d", "${POSTGRES_DB}"]
       start_period: 0s
