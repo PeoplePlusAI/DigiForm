@@ -7,11 +7,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: 2
-          memory: 1.5G
+          cpus: 3
+          memory: 2G
         reservations:
-          cpus: 2
-          memory: 1.5G
+          cpus: 3
+          memory: 2G
     volumes:
       - .:/code
     restart: always
@@ -26,7 +26,7 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: python3 manage.py runserver 0.0.0.0:${PORT}
+    command: gunicorn digiform.wsgi:application --workers 4 --bind 0.0.0.0:${PORT}
     deploy:
       resources:
         limits:
