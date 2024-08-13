@@ -4,14 +4,6 @@ services:
   telegram-bot:
     build: .
     command: python3 telegram-bot/run.py
-    deploy:
-      resources:
-        limits:
-          cpus: 3
-          memory: 2G
-        reservations:
-          cpus: 3
-          memory: 2G
     volumes:
       - .:/code
     restart: always
@@ -26,15 +18,7 @@ services:
       - .env
     ports:
       - "${PORT}:${PORT}"
-    command: gunicorn digiform.wsgi:application --workers 4 --bind 0.0.0.0:${PORT}
-    deploy:
-      resources:
-        limits:
-          cpus: 4
-          memory: 6G
-        reservations:
-          cpus: 4
-          memory: 6G
+    command: gunicorn digiform.wsgi:application --workers 3 --bind 0.0.0.0:${PORT}
     volumes:
       - .:/code
     restart: always
