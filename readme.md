@@ -34,6 +34,12 @@ To start the backend service along with the DB, run the following command:
 docker compose up -d --build
 ```
 
+### Here's the github repo link for implementation of Digiform for College Admission Use Case - 
+
+```
+https://github.com/aashnijoshi/DigiForm-CollegeApp
+```
+
 ### Telegram Bot
 
 Once the backend service is running, you can start chatting with the telegram bot using the `/start` command.
