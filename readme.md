@@ -1,10 +1,11 @@
 ### https://peopleplus.ai/digiform
 
-<img src="logo.png" alt="Sukoon Pic" width="200" style="display: block; margin: 0 auto;">
+<!-- <img src="logo.png" alt="Sukoon Pic" width="200" style="display: block; margin: 0 auto;"> -->
+![logo.png](logo.png)
 
 ### Watch the demo here
-[![Link to Demo](logo.png)](https://www.youtube.com/watch?v=x-Xpx75RVHI)
-[Demo for Telegram Chatbot](hhttps://drive.google.com/file/d/1CM9v0-hrWHCK3FPZNe0HIVfOAlDA1jL0/view?usp=sharing)
+[![Link to Demo](logo2.png)](https://www.youtube.com/watch?v=x-Xpx75RVHI)
+[Demo for Telegram Chatbot](https://drive.google.com/file/d/1CM9v0-hrWHCK3FPZNe0HIVfOAlDA1jL0/view?usp=drive_link)
 
 ## Setup
 
