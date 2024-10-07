@@ -6,7 +6,7 @@
 ### Watch the demo here
 [![Link to Demo](logo2.png)](https://www.youtube.com/watch?v=x-Xpx75RVHI)
 
-## ![Demo for Telegram Chatbot](https://drive.google.com/file/d/1CM9v0-hrWHCK3FPZNe0HIVfOAlDA1jL0/view?usp=drive_link)
+## [Demo for Telegram Chatbot](https://drive.google.com/file/d/1CM9v0-hrWHCK3FPZNe0HIVfOAlDA1jL0/view?usp=drive_link)
 
 ## Setup
 
